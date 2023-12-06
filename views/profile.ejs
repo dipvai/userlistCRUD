@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User Profile</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f9f9f9;
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    header {
+      background-color: #333;
+      color: #fff;
+      text-align: center;
+      padding: 20px;
+    }
+
+    .profile-container {
+      background-color: #fff;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      border-radius: 10px;
+      overflow: hidden;
+      width: 400px;
+      margin: 20px;
+      padding: 20px;
+      text-align: left;
+    }
+
+    .user-info {
+      margin-bottom: 15px;
+    }
+
+    label {
+      font-weight: bold;
+      display: block;
+      margin-bottom: 5px;
+      color: #555;
+    }
+
+    span {
+      display: block;
+      padding: 8px;
+      background-color: #f3f3f3;
+      border-radius: 5px;
+      color: #333;
+    }
+
+    button {
+      background-color: #333;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #555;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>User Profile</h1>
+  </header>
+
+  <div class="profile-container">
+    <div class="user-info">
+      <label for="firstName">First Name:</label>
+      <span id="firstName"><%=user[0] %></span>
+    </div>
+    <div class="user-info">
+      <label for="lastName">Last Name:</label>
+      <span id="lastName"><%=user[1] %></span>
+    </div>
+    <div class="user-info">
+      <label for="email">Email:</label>
+      <span id="email"><%=user[8] %></span>
+    </div>
+    <div class="user-info">
+      <label for="dateOfBirth">Date of Birth:</label>
+      <span id="dateOfBirth"><%=user[2] %></span>
+    </div>
+    <!-- Add more user information fields as needed -->
+
+    <!-- Example back button to go back to the user list -->
+    <button onclick="goBack()">Back to User List</button>
+  </div>
+
+</body>
+</html>
+
+
+  

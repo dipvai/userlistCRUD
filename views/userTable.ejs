@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>User List with Scrollbar</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        text-align: center;
+        padding: 20px;
+      }
+
+      h1 {
+        color: #333;
+      }
+
+      a {
+        text-decoration: none; /* Remove underline */
+        color: #000; /* Change the color to black */
+      }
+
+      a:hover {
+        color: #555; /* Change the color on hover */
+      }
+
+      /* Container with a fixed height and scrollbars */
+      .table-container {
+        width: 80%;
+        height: 500px; /* Adjust the height as needed */
+        margin: 0 auto;
+        overflow-y: scroll;
+        background-color: #fff;
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+
+      th,
+      td {
+        padding: 10px;
+        text-align: left;
+      }
+
+      th {
+        background-color: #333;
+        color: #fff;
+        position: sticky;
+        top: 0;
+        z-index: 1;
+      }
+
+      tr:nth-child(even) {
+        background-color: #f2f2f2;
+      }
+      .btn {
+        text-align: center;
+        margin: 20px;
+      }
+
+      .btn button {
+        padding: 10px 20px;
+        background-color: #007bff; /* Button background color */
+        color: #fff; /* Text color */
+        border: none;
+        border-radius: 4px;
+        font-size: 16px;
+        cursor: pointer;
+        margin-right: 10px; /* Add margin between buttons */
+      }
+
+      .btn button:hover {
+        background-color: #0056b3; /* Hover background color */
+      }
+    </style>
+  </head>
+  <body>
+    <h1>User List</h1>
+    <!-- Container with a scrollbar -->
+    <form action="/userlist" method="get">
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th></th>
+              <th>First Name</th>
+              <th>Last Name</th>
+              <th>Date of Birth</th>
+              <th>Class</th>
+              <th>Address</th>
+              <th>State</th>
+              <th>Country</th>
+              <th>Gender</th>
+              <th>Email</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Add more rows for additional users -->
+            <% userData.forEach(function(user) { %>
+            <tr>
+              <td>
+                <input
+                  type="checkbox"
+                  name="selectedUsers[]"
+                  value="<%= user.email %>"
+                  id=""
+                />
+              </td>
+              <td><%=user.firstName %></td>
+              <td><%=user.lastName %></td>
+              <td><%=user.dateOfBirth %></td>
+              <td><%=user.class %></td>
+              <td><%=user.address %></td>
+              <td><%=user.state %></td>
+              <td><%=user.country %></td>
+              <td><%=user.gender %></td>
+              <td id="_id"><%=user.email %></td>
+            </tr>
+            <% }); %>
+          </tbody>
+        </table>
+      </div>
+      <div class="btn">
+        <button>Delete user</button>
+      </div>
+    </form>
+    <div class="btn" >
+      <button id="add" >Add user</button>
+    </div>
+  </body>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      let users = Array.from(document.getElementsByTagName("tr"));
+      //console.log(users[1]);
+      users.forEach(function (user) {
+        user.addEventListener("click", function () {
+          if (
+            event.target.tagName.toLowerCase() === "input" && //tagName returned in upper case
+            event.target.type === "checkbox"
+          ) {
+            // Checkbox clicked, do nothing or add checkbox-specific logic
+            console.log("Checkbox clicked!");
+          } else {
+            // Not a checkbox, execute your row click logic
+            let _id = user.querySelector("#_id");
+            // console.log(user.textContent)
+            //console.log(_id.textContent);
+            sendData(_id.textContent, user.textContent);
+            function sendData(_id, data) {
+              fetch(
+                `http://localhost:3000/userlist/${_id}?data=${encodeURIComponent(
+                  data
+                )}`,
+                {
+                  method: "get",
+                  headers: {
+                    "Content-type": "application/json",
+                  },
+                  //body: JSON.stringify({ _id, data }),
+                }
+              )
+                .then((response) => response.json())
+                .then((data) => {
+                  console.log(data);
+                })
+                .catch((err) => {
+                  console.log();
+                });
+              window.open(
+                `http://localhost:3000/userlist/${_id}?data=${encodeURIComponent(
+                  data
+                )}`
+              );
+            }
+          }
+        });
+      });
+    });
+    document.getElementById("add").addEventListener("click", () => {
+      window.open("http://localhost:3000/signup");
+    });
+  </script>
+</html>

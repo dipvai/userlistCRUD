@@ -1,0 +1,9 @@
+const session = function (req, res, next) {
+  if (!logged) {
+    res.redirect("http://localhost:3000/login");
+  } else {
+    next();
+  }
+};
+
+module.exports = session;
